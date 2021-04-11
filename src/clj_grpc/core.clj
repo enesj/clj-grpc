@@ -1,6 +1,7 @@
 (ns clj-grpc.core
   (:gen-class)
-  (:require [clj-grpc.service])
+  (:require [clj-grpc.service]
+            [mount.core :as mount :refer [defstate]])
   (:import
     [io.grpc
      Server
@@ -21,11 +22,23 @@
           (Thread. (fn []
                      (if (not (nil? server))
                        (.shutdown server))))))
-    (if (not (nil? server))
-      (.awaitTermination server))))
+    server))
+    ;(if (not (nil? server))
+    ;    (.awaitTermination server))))
 
+(defstate server
+          :start (start)
+          :stop (.shutdown server))
 
-(defn -main
-  [& args]
-  (println "Now listening on port " SERVER_PORT)
-  (start))
+(defn go []
+  (print "Now listening on ports: " SERVER_PORT)
+  (mount/start)
+  :ready)
+
+(defn stop []
+  (mount/stop)
+  :stopped)
+
+(defn -main []
+  (print "Now listening on port: " SERVER_PORT)
+  (mount/start))

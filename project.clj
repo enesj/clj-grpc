@@ -22,6 +22,7 @@
    [com.google.protobuf/protobuf-java "3.6.0"]
    [javax.annotation/javax.annotation-api "1.2"]
    [io.netty/netty-codec-http2 "4.1.25.Final"]
+   [mount/mount  "0.1.16"]
    [io.grpc/grpc-core "1.13.1"]
    [io.grpc/grpc-netty "1.13.1"
     :exclusions [io.grpc/grpc-core
